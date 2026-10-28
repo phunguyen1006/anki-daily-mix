@@ -1,236 +1,251 @@
-/* Daily Mix dashboard. Scoped to .dm-app so Anki's own pages are untouched. */
+/* Anki Daily Mix - Native Anki UI/UX Theme
+ * Matches Anki Desktop's native deck browser, study screen, and design system.
+ * Free of generic AI slop: no tacky gradients, no neon glow, clean typography.
+ */
 
-html,
-body {
+:root {
+  --dm-font: "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", Arial, sans-serif;
+
+  /* Light Theme (matches Anki Light) */
+  --bg-page: #f5f6f8;
+  --bg-surface: #ffffff;
+  --bg-surface-subtle: #f8fafc;
+  --bg-highlight: #eef2ff;
+  --border: #e2e8f0;
+  --border-focus: #3b82f6;
+
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+
+  /* Anki Signature Colors */
+  --anki-blue: #0066cc;
+  --anki-blue-bg: #eff6ff;
+  --anki-green: #008800;
+  --anki-green-bg: #f0fdf4;
+  --anki-red: #c00000;
+  --anki-amber: #d97706;
+
+  --primary-btn: #0066cc;
+  --primary-btn-hover: #0052a3;
+  --primary-btn-text: #ffffff;
+
+  --btn-neutral-bg: #ffffff;
+  --btn-neutral-border: #cbd5e1;
+  --btn-neutral-hover: #f1f5f9;
+  --btn-neutral-text: #334155;
+
+  --ring-track: #e2e8f0;
+  --ring-fill: #0066cc;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
+  /* Compatibility aliases */
+  --surface: var(--bg-surface);
+  --surface-2: var(--bg-surface-subtle);
+  --track: var(--ring-track);
+  --accent: var(--anki-blue);
+  --muted: var(--text-muted);
+  --text: var(--text-main);
+}
+
+/* Anki Dark Mode (matches Anki Night Mode) */
+html.night-mode,
+body.nightMode,
+body.night_mode,
+.dm-app.dark-mode {
+  --bg-page: #1c1c1e;
+  --bg-surface: #2c2c2e;
+  --bg-surface-subtle: #3a3a3c;
+  --bg-highlight: #38383a;
+  --border: #3e3e42;
+  --border-focus: #60a5fa;
+
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --text-dim: #6b7280;
+
+  --anki-blue: #60a5fa;
+  --anki-blue-bg: #1e293b;
+  --anki-green: #4ade80;
+  --anki-green-bg: #14532d;
+  --anki-red: #f87171;
+  --anki-amber: #fbbf24;
+
+  --primary-btn: #3b82f6;
+  --primary-btn-hover: #2563eb;
+  --primary-btn-text: #ffffff;
+
+  --btn-neutral-bg: #2c2c2e;
+  --btn-neutral-border: #4b5563;
+  --btn-neutral-hover: #3a3a3c;
+  --btn-neutral-text: #e5e7eb;
+
+  --ring-track: #3a3a3c;
+  --ring-fill: #60a5fa;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+
+  /* Compatibility aliases */
+  --surface: var(--bg-surface);
+  --surface-2: var(--bg-surface-subtle);
+  --track: var(--ring-track);
+  --accent: var(--anki-blue);
+  --muted: var(--text-muted);
+  --text: var(--text-main);
+}
+
+html, body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  background: #f4f5fb;
-}
-
-body {
-  color: #171923;
+  background: var(--bg-page);
+  font-family: var(--dm-font);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
 }
 
 * {
   box-sizing: border-box;
 }
 
-.dm-app [hidden] {
+[hidden] {
   display: none !important;
 }
 
+/* Base App Shell */
 .dm-app {
-  --bg: #f4f5fb;
-  --surface: #ffffff;
-  --surface-2: #f8f8fe;
-  --text: #171923;
-  --muted: #5b6172;
-  --border: #e2e5f0;
-  --track: #eceef7;
-  --accent: #5457d6;
-  --accent-2: #7c3aed;
-  --accent-soft: #eeedfe;
-  --on-accent: #ffffff;
-  --success: #0f7b5f;
-  --warning: #a15308;
-  --danger: #b3261e;
-  --focus: #5457d6;
-  --ring-glow: rgba(84, 87, 214, 0.35);
-  --shadow: rgba(23, 25, 35, 0.08);
-  --scroll: #c9cddc;
-
   min-height: 100vh;
-  margin: 0;
-  background:
-    radial-gradient(1100px 520px at 50% -240px, var(--accent-soft) 0%, transparent 72%),
-    var(--bg);
-  color: var(--text);
-  font-family: "Inter", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system,
-    "Helvetica Neue", sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-html.night-mode .dm-app,
-body.nightMode .dm-app,
-body.night_mode .dm-app {
-  --bg: #0d0f15;
-  --surface: #151821;
-  --surface-2: #191d27;
-  --text: #edeffa;
-  --muted: #a4abbe;
-  --border: #262b39;
-  --track: #232837;
-  --accent: #a294ff;
-  --accent-2: #c4b5fd;
-  --accent-soft: #211d3a;
-  --on-accent: #0d0f15;
-  --success: #4ade80;
-  --warning: #fbbf24;
-  --danger: #fb7185;
-  --focus: #c4b5fd;
-  --ring-glow: rgba(162, 148, 255, 0.32);
-  --shadow: rgba(0, 0, 0, 0.45);
-  --scroll: #3a4154;
-}
-
-html.night-mode,
-body.nightMode,
-body.night_mode {
-  background: #0d0f15;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  padding: 16px 20px 24px;
 }
 
 .dm-shell {
-  width: 100%;
-  max-width: 920px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 26px 26px 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-/* Header ------------------------------------------------------------------ */
-
+/* Header (Anki Deck Browser Top Bar Style) */
 .dm-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 20px;
+  padding-bottom: 2px;
 }
 
 .dm-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-width: 0;
+  gap: 8px;
 }
 
 .dm-logo {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  flex: 0 0 auto;
-  border-radius: 14px;
-  background: var(--accent-soft);
-  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--anki-blue-bg);
+  color: var(--anki-blue);
   border: 1px solid var(--border);
 }
 
 .dm-logo svg {
-  width: 24px;
-  height: 24px;
-}
-
-.dm-brand-copy {
-  min-width: 0;
+  width: 16px;
+  height: 16px;
 }
 
 .dm-title {
   margin: 0;
-  font-size: 20px;
-  font-weight: 750;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-main);
 }
 
 .dm-date {
-  margin: 2px 0 0;
-  font-size: 12.5px;
-  color: var(--muted);
+  margin: 0;
+  font-size: 11.5px;
+  color: var(--text-muted);
 }
 
 .dm-header-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .dm-icon-button {
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
   padding: 0;
-  border: 1px solid var(--border);
-  border-radius: 11px;
-  background: var(--surface);
-  color: var(--muted);
+  border-radius: 5px;
+  background: var(--btn-neutral-bg);
+  border: 1px solid var(--btn-neutral-border);
+  color: var(--btn-neutral-text);
   cursor: pointer;
-  transition: color 0.16s ease, border-color 0.16s ease, background 0.16s ease;
-}
-
-.dm-icon-button svg {
-  width: 18px;
-  height: 18px;
+  transition: background 0.15s, border-color 0.15s;
 }
 
 .dm-icon-button:hover {
-  color: var(--text);
-  border-color: var(--muted);
+  background: var(--bg-highlight);
+  border-color: var(--text-muted);
 }
 
-/* Hero -------------------------------------------------------------------- */
+.dm-icon-button svg {
+  width: 14px;
+  height: 14px;
+}
 
+/* Hero Card (Native Anki Container Card) */
 .dm-hero {
-  position: relative;
-  display: grid;
-  grid-template-columns: 196px minmax(0, 1fr);
-  align-items: center;
-  gap: 28px;
-  padding: 28px;
+  background: var(--bg-surface);
   border: 1px solid var(--border);
-  border-radius: 24px;
-  background: linear-gradient(150deg, var(--surface) 0%, var(--surface-2) 100%);
-  box-shadow: 0 24px 60px -48px var(--shadow);
-  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  padding: 18px 22px;
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  align-items: center;
+  gap: 22px;
 }
 
-.dm-hero::before {
-  content: "";
-  position: absolute;
-  top: -120px;
-  right: -80px;
-  width: 320px;
-  height: 320px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--accent-soft) 0%, transparent 68%);
-  opacity: 0.9;
-  pointer-events: none;
-}
-
+/* Clean Progress Ring */
 .dm-ring-wrap {
   position: relative;
-  width: 180px;
-  height: 180px;
+  width: 110px;
+  height: 110px;
   justify-self: center;
 }
 
 .dm-ring {
-  width: 180px;
-  height: 180px;
-  display: block;
-}
-
-.dm-ring-track,
-.dm-ring-progress {
-  fill: none;
-  stroke-width: 11;
+  width: 110px;
+  height: 110px;
+  transform: rotate(-90deg);
 }
 
 .dm-ring-track {
-  stroke: var(--track);
+  fill: none;
+  stroke: var(--ring-track);
+  stroke-width: 8;
 }
 
 .dm-ring-progress {
-  stroke: var(--accent);
+  fill: none;
+  stroke: var(--ring-fill);
+  stroke-width: 8;
   stroke-linecap: round;
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-  filter: drop-shadow(0 0 7px var(--ring-glow));
-  transition: stroke-dashoffset 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: stroke-dashoffset 0.4s ease;
 }
 
 .dm-ring-copy {
@@ -240,298 +255,298 @@ body.night_mode {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1px;
   text-align: center;
 }
 
 .dm-ring-value {
-  font-size: 44px;
-  font-weight: 760;
-  line-height: 1;
-  letter-spacing: -0.04em;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-main);
   font-variant-numeric: tabular-nums;
 }
 
 .dm-ring-target {
-  font-size: 12.5px;
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+  color: var(--text-muted);
 }
 
 .dm-ring-caption {
-  margin-top: 3px;
-  font-size: 10.5px;
-  font-weight: 650;
-  letter-spacing: 0.07em;
+  font-size: 9.5px;
+  font-weight: 600;
   text-transform: uppercase;
-  color: var(--muted);
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  margin-top: 1px;
 }
 
+/* Hero Content */
 .dm-hero-copy {
-  position: relative;
-  min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .dm-eyebrow {
-  margin: 0 0 5px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.09em;
+  margin: 0 0 3px;
+  font-size: 10.5px;
+  font-weight: 600;
   text-transform: uppercase;
-  color: var(--accent);
+  letter-spacing: 0.05em;
+  color: var(--anki-blue);
 }
 
 .dm-hero-title {
   margin: 0;
-  font-size: 29px;
-  font-weight: 760;
-  line-height: 1.16;
-  letter-spacing: -0.035em;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-main);
 }
 
 .dm-hero-text {
-  margin: 8px 0 0;
-  max-width: 54ch;
-  font-size: 13.5px;
-  color: var(--muted);
+  margin: 4px 0 0;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.4;
 }
 
+/* Clean Anki Status Chips */
 .dm-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 15px;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
 }
 
 .dm-chip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 9px;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--bg-surface-subtle);
   border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--surface);
-  font-size: 11.5px;
-  font-weight: 600;
-  color: var(--muted);
-  white-space: nowrap;
+  color: var(--text-muted);
 }
 
 .dm-chip--accent {
+  background: var(--anki-blue-bg);
   border-color: transparent;
-  background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--anki-blue);
+  font-weight: 600;
 }
 
 .dm-chip-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: currentColor;
 }
 
+/* Action Button: Anki Primary Study Button Style */
 .dm-cta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  margin-top: 18px;
-  padding: 13px 18px;
-  border: 0;
-  border-radius: 14px;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
-  color: var(--on-accent);
-  text-align: left;
+  max-width: 320px;
+  margin-top: 14px;
+  padding: 9px 16px;
+  background: var(--primary-btn);
+  color: var(--primary-btn-text);
+  border: 1px solid transparent;
+  border-radius: 6px;
   cursor: pointer;
-  box-shadow: 0 14px 28px -18px var(--accent);
-  transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+  font-family: inherit;
+  transition: background 0.15s, box-shadow 0.15s;
+  box-shadow: var(--shadow-sm);
 }
 
 .dm-cta:hover:not(:disabled) {
-  transform: translateY(-1px);
-  filter: brightness(1.04);
-  box-shadow: 0 18px 32px -18px var(--accent);
-}
-
-.dm-cta:active:not(:disabled) {
-  transform: translateY(0);
+  background: var(--primary-btn-hover);
 }
 
 .dm-cta:disabled {
-  opacity: 0.5;
+  opacity: 0.55;
   cursor: not-allowed;
   box-shadow: none;
 }
 
 .dm-cta-label {
-  font-size: 16px;
-  font-weight: 720;
+  font-size: 13.5px;
+  font-weight: 600;
   letter-spacing: -0.01em;
 }
 
 .dm-cta-hint {
   font-size: 11px;
-  font-weight: 500;
-  opacity: 0.82;
+  font-weight: 400;
+  opacity: 0.85;
 }
 
+/* Banner / Warning Notification */
 .dm-banner {
-  margin-top: 13px;
-  padding: 11px 13px;
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 1.4;
   border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--surface-2);
-  font-size: 12.5px;
-  color: var(--muted);
+  background: var(--bg-surface-subtle);
 }
 
 .dm-banner--error {
-  border-color: var(--danger);
-  background: transparent;
-  color: var(--danger);
+  border-color: var(--anki-red);
+  background: rgba(220, 38, 38, 0.08);
+  color: var(--anki-red);
 }
 
 .dm-banner--notice {
   border-color: var(--border);
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
-.dm-banner strong {
-  color: inherit;
-}
-
-/* Stats ------------------------------------------------------------------- */
-
+/* Stats Section (Anki 3-Counter Style: Due, New, In Mix, Sources) */
 .dm-stats {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
-  margin-top: 12px;
 }
 
 .dm-stat {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  padding: 10px 14px;
   display: flex;
   flex-direction: column;
-  gap: 1px;
-  min-width: 0;
-  padding: 14px 15px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--surface);
 }
 
 .dm-stat-label {
   font-size: 10.5px;
-  font-weight: 680;
-  letter-spacing: 0.06em;
+  font-weight: 600;
   text-transform: uppercase;
-  color: var(--muted);
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
 }
 
 .dm-stat-value {
-  font-size: 25px;
-  font-weight: 740;
+  font-size: 21px;
+  font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.03em;
+  margin-top: 2px;
   font-variant-numeric: tabular-nums;
+  color: var(--text-main);
+}
+
+/* Authentic Anki Colors for Statistics */
+#dm-stat-review {
+  color: var(--anki-green);
+}
+
+#dm-stat-new {
+  color: var(--anki-blue);
 }
 
 .dm-stat-sub {
-  overflow: hidden;
-  font-size: 11.5px;
-  color: var(--muted);
-  text-overflow: ellipsis;
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--text-dim);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Sources ----------------------------------------------------------------- */
-
+/* Sources Table Section (Like Anki Deck List) */
 .dm-sources {
-  margin-top: 28px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  padding: 14px 18px 18px;
 }
 
 .dm-section-head {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
 }
 
 .dm-section-title {
   margin: 0;
-  font-size: 16px;
-  font-weight: 720;
-  letter-spacing: -0.015em;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-main);
 }
 
 .dm-section-sub {
-  margin: 2px 0 0;
-  font-size: 12px;
-  color: var(--muted);
+  margin: 1px 0 0;
+  font-size: 11px;
+  color: var(--text-muted);
 }
 
 .dm-badges {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
   gap: 6px;
 }
 
 .dm-badge {
-  padding: 4px 8px;
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  background: var(--surface);
+  padding: 2px 7px;
+  border-radius: 4px;
   font-size: 10.5px;
-  font-weight: 650;
-  letter-spacing: 0.02em;
-  color: var(--muted);
-  white-space: nowrap;
+  font-weight: 500;
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
 }
 
+/* Allocation Bar */
 .dm-allocation {
   display: flex;
-  height: 9px;
-  margin: 15px 0 10px;
-  border-radius: 999px;
-  background: var(--track);
+  height: 5px;
+  margin: 12px 0 10px;
+  border-radius: 3px;
+  background: var(--ring-track);
   overflow: hidden;
 }
 
 .dm-allocation-segment {
   height: 100%;
   min-width: 2px;
-  transition: width 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: width 0.3s ease;
 }
 
+/* Deck Table List (Native Anki Table Row Style) */
 .dm-deck-list {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 1px;
 }
 
 .dm-deck {
   display: grid;
-  grid-template-columns: 9px minmax(0, 1fr) auto;
+  grid-template-columns: 14px minmax(0, 1fr) auto 70px;
   align-items: center;
-  gap: 11px;
-  padding: 12px 14px 10px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--surface);
-  transition: border-color 0.16s ease;
+  gap: 10px;
+  padding: 7px 8px;
+  border-radius: 5px;
+  transition: background 0.12s;
 }
 
 .dm-deck:hover {
-  border-color: var(--muted);
+  background: var(--bg-surface-subtle);
 }
 
 .dm-deck-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 3px;
-  background: var(--dot);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--dot, var(--anki-blue));
 }
 
 .dm-deck-main {
@@ -539,20 +554,18 @@ body.night_mode {
 }
 
 .dm-deck-name {
-  overflow: hidden;
-  font-size: 13.5px;
-  font-weight: 650;
-  text-overflow: ellipsis;
+  font-size: 12.5px;
+  font-weight: 550;
+  color: var(--text-main);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dm-deck-meta {
+  font-size: 11px;
+  color: var(--text-muted);
   margin-top: 1px;
-  overflow: hidden;
-  font-size: 11.5px;
-  color: var(--muted);
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .dm-deck-count {
@@ -560,251 +573,89 @@ body.night_mode {
   align-items: baseline;
   gap: 4px;
   font-variant-numeric: tabular-nums;
-  white-space: nowrap;
+  font-size: 12px;
 }
 
 .dm-deck-planned {
-  font-size: 15px;
-  font-weight: 720;
+  font-weight: 600;
+  color: var(--text-main);
 }
 
 .dm-deck-available {
   font-size: 11px;
-  color: var(--muted);
-}
-
-.dm-deck-weight {
-  margin-left: 5px;
-  padding: 2px 5px;
-  border-radius: 5px;
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-size: 10px;
-  font-weight: 700;
+  color: var(--text-dim);
 }
 
 .dm-deck-bar {
-  grid-column: 2 / -1;
-  height: 3px;
-  margin-top: 3px;
-  border-radius: 999px;
-  background: var(--track);
+  height: 4px;
+  border-radius: 2px;
+  background: var(--ring-track);
   overflow: hidden;
 }
 
 .dm-deck-bar-fill {
   height: 100%;
-  border-radius: inherit;
-  background: var(--dot);
-  transition: width 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+  background: var(--dot, var(--anki-blue));
+  border-radius: 2px;
 }
 
 .dm-empty {
-  margin: 8px 0 0;
-  padding: 22px 16px;
-  border: 1px dashed var(--border);
-  border-radius: 14px;
-  color: var(--muted);
+  padding: 20px;
   text-align: center;
+  color: var(--text-muted);
+  font-size: 12.5px;
 }
 
-/* Footer ------------------------------------------------------------------ */
-
+/* Footer (Anki Status Bar Style) */
 .dm-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
-  margin-top: 28px;
-  padding-top: 14px;
-  border-top: 1px solid var(--border);
-  font-size: 11.5px;
-  color: var(--muted);
-}
-
-.dm-footer-status {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  padding-top: 2px;
+  font-size: 11px;
+  color: var(--text-dim);
 }
 
 .dm-footer-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex: 0 0 auto;
+  gap: 10px;
 }
 
 .dm-link-button {
+  background: none;
+  border: none;
   padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--accent);
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
+  color: var(--text-muted);
   text-decoration: underline;
-  text-underline-offset: 2px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
 }
 
 .dm-link-button:hover {
-  color: var(--text);
+  color: var(--text-main);
 }
 
-.dm-version {
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-/* Interaction ------------------------------------------------------------- */
-
-.dm-app button:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 2px;
-}
-
-.dm-app a:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 2px;
-}
-
-.dm-app ::selection {
-  background: var(--accent-soft);
-  color: var(--text);
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--scroll);
-  border: 2px solid var(--bg);
-  border-radius: 999px;
-}
-
-/* Motion ------------------------------------------------------------------ */
-
-@keyframes dm-rise {
-  from {
-    opacity: 0;
-    transform: translateY(7px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.dm-hero,
-.dm-stat,
-.dm-sources {
-  animation: dm-rise 0.34s ease both;
-}
-
-.dm-stat:nth-child(2) {
-  animation-delay: 0.04s;
-}
-
-.dm-stat:nth-child(3) {
-  animation-delay: 0.08s;
-}
-
-.dm-stat:nth-child(4) {
-  animation-delay: 0.12s;
-}
-
-.dm-sources {
-  animation-delay: 0.1s;
-}
-
-/* Responsive -------------------------------------------------------------- */
-
-@media (max-width: 700px) {
-  .dm-shell {
-    padding: 18px 16px 26px;
-  }
-
+/* Responsive adjustment */
+@media (max-width: 640px) {
   .dm-hero {
     grid-template-columns: 1fr;
-    gap: 18px;
-    padding: 22px;
     text-align: center;
   }
-
   .dm-hero-copy {
-    text-align: center;
+    align-items: center;
   }
-
-  .dm-hero-text {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .dm-chips,
-  .dm-badges {
+  .dm-chips {
     justify-content: center;
   }
-
-  .dm-cta {
-    align-items: center;
-    text-align: center;
-  }
-
   .dm-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  .dm-section-head {
-    flex-direction: column;
-    align-items: flex-start;
+  .dm-deck {
+    grid-template-columns: 14px minmax(0, 1fr) auto;
   }
-
-  .dm-badges {
-    justify-content: flex-start;
+  .dm-deck-bar {
+    display: none;
   }
-
-  .dm-footer {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-}
-
-@media (max-width: 420px) {
-  .dm-stats {
-    grid-template-columns: 1fr;
-  }
-
-  .dm-hero-title {
-    font-size: 25px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .dm-hero,
-  .dm-stat,
-  .dm-sources {
-    animation: none;
-  }
-
-  .dm-cta,
-  .dm-ring-progress,
-  .dm-allocation-segment,
-  .dm-deck-bar-fill {
-    transition: none;
-  }
-}
-
-body.reduce-motion .dm-app *,
-.dm-app[data-reduce-motion="1"] * {
-  animation: none !important;
-  transition: none !important;
 }

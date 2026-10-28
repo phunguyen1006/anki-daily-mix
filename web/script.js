@@ -8,14 +8,14 @@
   "use strict";
 
   var COLORS = [
-    "#8B7CFF",
-    "#2DD4BF",
-    "#F472B6",
-    "#FBBF24",
-    "#60A5FA",
-    "#34D399",
-    "#FB7185",
-    "#A78BFA"
+    "#0066cc",
+    "#008800",
+    "#d97706",
+    "#6366f1",
+    "#0284c7",
+    "#16a34a",
+    "#ea580c",
+    "#8b5cf6"
   ];
 
   var RING_RADIUS = 56;
@@ -261,10 +261,10 @@
     var plannedReview = number(data.planned_review);
     var plannedNew = number(data.planned_new);
     if (plannedReview > 0) {
-      add(plural(plannedReview, "review"), false, "var(--accent)");
+      add(plural(plannedReview, "review"), false, "var(--anki-green)");
     }
     if (plannedNew > 0) {
-      add(plural(plannedNew, "new card"), false, "var(--success)");
+      add(plural(plannedNew, "new card"), false, "var(--anki-blue)");
     }
     add(data.order_label || "Interleaved", true);
     add(
