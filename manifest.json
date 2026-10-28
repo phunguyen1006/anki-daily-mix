@@ -1,0 +1,11 @@
+{
+  "package": "anki_daily_mix",
+  "name": "Anki Daily Mix",
+  "human_version": "1.0.0",
+  "mod": 1,
+  "conflicts": [],
+  "min_point_version": 231000,
+  "max_point_version": 0,
+  "branch_index": 0,
+  "disabled": false
+}

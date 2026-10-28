@@ -1,0 +1,13 @@
+{
+  "daily_target": 100,
+  "review_percent": 80,
+  "order_strategy": "interleaved",
+  "decks": [],
+  "include_subdecks": true,
+  "backfill": true,
+  "cleanup_on_start": true,
+  "cleanup_on_close": true,
+  "mix_deck_name": "Daily Mix",
+  "show_toolbar_button": true,
+  "shortcut": "Ctrl+Shift+D"
+}

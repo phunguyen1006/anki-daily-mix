@@ -1,0 +1,111 @@
+<!-- Body fragment injected into Anki's web view by src/ui_dashboard.py. -->
+<div class="dm-app" id="dm-app" data-status="loading">
+  <div class="dm-shell">
+    <header class="dm-header">
+      <div class="dm-brand">
+        <span class="dm-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="3.2" y="6.6" width="10.8" height="13.6" rx="3" stroke="currentColor" stroke-width="1.6" opacity=".45"></rect>
+            <rect x="9.2" y="3.4" width="11.2" height="13.8" rx="3" fill="var(--surface)" stroke="currentColor" stroke-width="1.6"></rect>
+            <path d="M12.3 8.1h4.6M12.3 11.1h3.1M12.3 14.1h2.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+          </svg>
+        </span>
+        <div class="dm-brand-copy">
+          <h1 class="dm-title">Daily Mix</h1>
+          <p class="dm-date" id="dm-date">Today</p>
+        </div>
+      </div>
+      <div class="dm-header-actions">
+        <button type="button" class="dm-icon-button" id="dm-refresh" aria-label="Refresh dashboard" title="Refresh">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
+            <path d="M21 3v6h-6"></path>
+          </svg>
+        </button>
+        <button type="button" class="dm-icon-button" id="dm-settings" aria-label="Open settings" title="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="dm-main">
+      <section class="dm-hero" aria-labelledby="dm-hero-title">
+        <div class="dm-ring-wrap">
+          <svg class="dm-ring" viewBox="0 0 128 128" role="progressbar" id="dm-ring" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="dm-ring-caption">
+            <circle class="dm-ring-track" cx="64" cy="64" r="56"></circle>
+            <circle class="dm-ring-progress" cx="64" cy="64" r="56" id="dm-ring-progress"></circle>
+          </svg>
+          <div class="dm-ring-copy">
+            <span class="dm-ring-value" id="dm-done">0</span>
+            <span class="dm-ring-target">of <span id="dm-target">0</span></span>
+            <span class="dm-ring-caption" id="dm-ring-caption">cards today</span>
+          </div>
+        </div>
+
+        <div class="dm-hero-copy">
+          <p class="dm-eyebrow" id="dm-eyebrow">Today's session</p>
+          <h2 class="dm-hero-title" id="dm-hero-title">Building your mix…</h2>
+          <p class="dm-hero-text" id="dm-hero-text">One moment while Anki reads your decks.</p>
+
+          <div class="dm-chips" id="dm-chips"></div>
+
+          <button type="button" class="dm-cta" id="dm-start" disabled aria-busy="false">
+            <span class="dm-cta-label" id="dm-cta-label">Start Daily Mix</span>
+            <span class="dm-cta-hint" id="dm-cta-hint">Space or Ctrl+Enter</span>
+          </button>
+
+          <div class="dm-banner" id="dm-banner" role="status" aria-live="polite" hidden></div>
+        </div>
+      </section>
+
+      <section class="dm-stats" id="dm-stats" aria-label="Today's numbers">
+        <article class="dm-stat">
+          <span class="dm-stat-label">Due reviews</span>
+          <strong class="dm-stat-value" id="dm-stat-review">0</strong>
+          <span class="dm-stat-sub" id="dm-stat-review-sub">0 planned</span>
+        </article>
+        <article class="dm-stat">
+          <span class="dm-stat-label">New cards</span>
+          <strong class="dm-stat-value" id="dm-stat-new">0</strong>
+          <span class="dm-stat-sub" id="dm-stat-new-sub">0 planned</span>
+        </article>
+        <article class="dm-stat">
+          <span class="dm-stat-label">In this mix</span>
+          <strong class="dm-stat-value" id="dm-stat-planned">0</strong>
+          <span class="dm-stat-sub" id="dm-stat-planned-sub">of 0 left</span>
+        </article>
+        <article class="dm-stat">
+          <span class="dm-stat-label">Sources</span>
+          <strong class="dm-stat-value" id="dm-stat-decks">0</strong>
+          <span class="dm-stat-sub" id="dm-stat-decks-sub">All decks</span>
+        </article>
+      </section>
+
+      <section class="dm-sources" aria-labelledby="dm-sources-title">
+        <div class="dm-section-head">
+          <div>
+            <h2 class="dm-section-title" id="dm-sources-title">Today's sources</h2>
+            <p class="dm-section-sub" id="dm-sources-sub">Weighted from your deck settings.</p>
+          </div>
+          <div class="dm-badges" id="dm-badges"></div>
+        </div>
+
+        <div class="dm-allocation" id="dm-allocation" aria-hidden="true"></div>
+        <div class="dm-deck-list" id="dm-deck-list"></div>
+        <p class="dm-empty" id="dm-empty" hidden></p>
+      </section>
+    </main>
+
+    <footer class="dm-footer">
+      <span class="dm-footer-status" id="dm-footer-status"></span>
+      <div class="dm-footer-actions">
+        <button type="button" class="dm-link-button" id="dm-cleanup" hidden>Return cards to home decks</button>
+        <span class="dm-version" id="dm-version"></span>
+      </div>
+    </footer>
+  </div>
+</div>
+<script type="application/json" id="dm-data">__DAILY_MIX_DATA__</script>
