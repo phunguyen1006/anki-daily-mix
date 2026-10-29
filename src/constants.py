@@ -13,7 +13,7 @@ from __future__ import annotations
 # ---------------------------------------------------------------------------
 
 ADDON_NAME = "Anki Daily Mix"
-ADDON_VERSION = "1.0.0"
+ADDON_VERSION = "1.0.1"
 
 #: Default name for the temporary filtered deck. Anki shows filtered decks in
 #: the deck list, so keep the name friendly and predictable.

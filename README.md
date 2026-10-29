@@ -1,5 +1,10 @@
 # Anki Daily Mix
 
+[![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)](https://github.com/phunguyen1006/anki-daily-mix/releases/tag/v1.0.1)
+[![Anki](https://img.shields.io/badge/anki-%3E%3D%2023.10-success.svg)](https://apps.ankiweb.net/)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-purple.svg)](LICENSE)
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](tests/)
+
 A daily, deck-spanning study session for Anki 23.10 and newer.
 
 Daily Mix gathers due reviews and new cards from the decks you choose, builds a
@@ -175,6 +180,17 @@ tools/build_addon.py  Deterministic .ankiaddon builder
 - Suspended and buried cards are always excluded. If the collection changes
   between planning and building (for example a sync arrives, or a card is
   deleted), the mix can contain fewer cards than the dashboard predicted.
+
+## Changelog
+
+### v1.0.1
+- **Settings Dialog Overhaul:** Wrapped configuration sections in a native `QScrollArea` and permanently pinned action buttons (`Save`, `Cancel`) to the bottom of the dialog. Added automatic screen-geometry clamping (`_clamp_to_screen`) to prevent oversized windows previously cached in Anki's `prefs21.db` from pushing buttons off-screen.
+- **Anki Rust Search Query Fix:** Formatted multi-deck search queries using valid parenthesized OR expressions (`(did:1 or did:2)`) instead of comma-separated `did:1,2` which broke Anki's Rust search parser and produced whole-collection card counts.
+- **Review and New Card Mixing:** Strictly isolated due review cards with `(-is:new is:due)`, ensuring due reviews and new cards are reliably blended up to the target quota (with backfill when reviews or new cards run short).
+- **UI/UX Refinement:** Clean native Anki desktop styling across the web dashboard and dialogs with zero AI-slop gradients.
+
+### v1.0.0
+- Initial release: daily filtered deck study session, dashboard with progress ring, deck tree with custom weights, sequential & interleaved ordering, and automatic cleanup hooks.
 
 ## License
 
