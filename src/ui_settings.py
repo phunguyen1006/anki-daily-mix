@@ -21,6 +21,7 @@ from aqt.qt import (
     QDialog,
     QDoubleSpinBox,
     QFormLayout,
+    QFrame,
     QGroupBox,
     QHBoxLayout,
     QHeaderView,
@@ -30,6 +31,7 @@ from aqt.qt import (
     QLineEdit,
     QPushButton,
     QRadioButton,
+    QScrollArea,
     QSpinBox,
     QTreeWidget,
     QTreeWidgetItem,
@@ -114,14 +116,30 @@ class SettingsDialog(QDialog):
         self.setWindowTitle("Daily Mix Settings")
         self.setObjectName("dailyMixSettings")
         self.setSizeGripEnabled(True)
-        self.setMinimumSize(560, 640)
-        self.resize(680, 800)
+        self.setMinimumSize(500, 420)
+        self.resize(600, 560)
 
         self._build_ui()
         self._load_values()
         self._loading = False
         self._sync_selection_mode()
         restoreGeom(self, "dailyMixSettings")
+        self._clamp_to_screen()
+
+    def _clamp_to_screen(self) -> None:
+        screen = self.screen() or (self.mw.screen() if self.mw else None)
+        if screen is not None:
+            avail = screen.availableGeometry()
+            w = min(self.width(), max(500, avail.width() - 40))
+            h = min(self.height(), max(420, avail.height() - 60))
+            if h > 800:
+                h = 750
+            if self.width() != w or self.height() != h:
+                self.resize(w, h)
+            geo = self.geometry()
+            x = max(avail.left() + 10, min(geo.x(), avail.right() - geo.width() - 10))
+            y = max(avail.top() + 10, min(geo.y(), avail.bottom() - geo.height() - 10))
+            self.move(x, y)
 
     # -- construction -------------------------------------------------------
 
@@ -132,14 +150,26 @@ class SettingsDialog(QDialog):
         )
         intro.setWordWrap(True)
 
-        layout = QVBoxLayout(self)
-        layout.setContentsMargins(18, 18, 18, 14)
-        layout.setSpacing(14)
-        layout.addWidget(intro)
-        layout.addWidget(self._build_quota_group())
-        layout.addWidget(self._build_deck_group(), 1)
-        layout.addWidget(self._build_session_group())
-        layout.addLayout(self._build_buttons())
+        outer_layout = QVBoxLayout(self)
+        outer_layout.setContentsMargins(14, 14, 14, 12)
+        outer_layout.setSpacing(10)
+
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.Shape.NoFrame)
+
+        container = QWidget()
+        body_layout = QVBoxLayout(container)
+        body_layout.setContentsMargins(4, 4, 4, 4)
+        body_layout.setSpacing(12)
+        body_layout.addWidget(intro)
+        body_layout.addWidget(self._build_quota_group())
+        body_layout.addWidget(self._build_deck_group(), 1)
+        body_layout.addWidget(self._build_session_group())
+
+        scroll.setWidget(container)
+        outer_layout.addWidget(scroll, 1)
+        outer_layout.addLayout(self._build_buttons())
         self._refresh_spin_states()
 
     def _build_quota_group(self) -> QWidget:
@@ -220,7 +250,7 @@ class SettingsDialog(QDialog):
         self.tree.setHeaderLabels(["Deck", "Weight"])
         self.tree.setRootIsDecorated(True)
         self.tree.setUniformRowHeights(True)
-        self.tree.setMinimumHeight(230)
+        self.tree.setMinimumHeight(160)
         self.tree.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.tree.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         header = self.tree.header()

@@ -20,6 +20,7 @@ from src.engine import (
     NoCardsAvailable,
     NoDecksConfigured,
     QuotaReached,
+    _query_for_decks,
     allocate,
     cleanup_mix_deck,
     get_dashboard_data,
@@ -265,11 +266,14 @@ class FakeCollection:
         cids: list[int] | None = None
         dids: list[int] = []
         state = ""
-        for token in tokens:
+        for raw_token in tokens:
+            token = raw_token.strip("()")
             if token.startswith("cid:"):
                 cids = [int(part) for part in token[4:].split(",") if part]
             elif token.startswith("did:"):
-                dids = [int(part) for part in token[4:].split(",") if part]
+                for part in token[4:].split(","):
+                    if part:
+                        dids.append(int(part))
             elif token == "is:due":
                 state = "review"
             elif token == "is:new":
@@ -732,6 +736,65 @@ class SessionTests(unittest.TestCase):
             self.assertNotEqual(ordered[index], ordered[index + 1])
         self.assertEqual(ordered[0], ordered[2])
         self.assertEqual(ordered[1], ordered[3])
+
+    def test_query_for_decks_syntax(self) -> None:
+        self.assertEqual(
+            _query_for_decks([1], constants.SEARCH_DUE),
+            "did:1 (-is:new is:due) -is:suspended -is:buried",
+        )
+        self.assertEqual(
+            _query_for_decks([1, 2], constants.SEARCH_DUE),
+            "(did:1 or did:2) (-is:new is:due) -is:suspended -is:buried",
+        )
+        self.assertEqual(
+            _query_for_decks([3, 1, 2], constants.SEARCH_NEW),
+            "(did:1 or did:2 or did:3) is:new -is:suspended -is:buried",
+        )
+        self.assertEqual(_query_for_decks([], constants.SEARCH_DUE), "did:0")
+
+    def test_mix_due_reviews_and_new_cards_up_to_target(self) -> None:
+        col = self._collection()
+        parent = col.add_deck("Parent")
+        deck_a = col.add_deck("Parent::SubdeckA")
+        deck_b = col.add_deck("Parent::SubdeckB")
+
+        # 365 due reviews total (e.g. 200 in A, 165 in B)
+        for i in range(200):
+            col.add_card(deck_a, kind="review", due=i)
+        for i in range(165):
+            col.add_card(deck_b, kind="review", due=i)
+
+        # 1000 new cards total (500 in A, 500 in B)
+        for i in range(500):
+            col.add_card(deck_a, kind="new", due=0)
+            col.add_card(deck_b, kind="new", due=0)
+
+        # Target 500 cards, 80% reviews / 20% new
+        # Target reviews = 400, Target new = 100
+        # Available reviews = 365 (short by 35)
+        # Backfill takes 35 additional new cards -> 135 new cards total
+        # Final mix: exactly 365 reviews + 135 new = 500 cards total
+        cfg = normalize_config(
+            {
+                "daily_target": 500,
+                "review_percent": 80,
+                "backfill": True,
+                "decks": [{"name": "Parent", "weight": 1.0}],
+                "include_subdecks": True,
+            }
+        )
+
+        plan = plan_mix(col, cfg, include_cards=True)
+        self.assertEqual(plan.planned_total, 500)
+        self.assertEqual(plan.planned_review, 365)
+        self.assertEqual(plan.planned_new, 135)
+        self.assertEqual(len(plan.review_cids), 365)
+        self.assertEqual(len(plan.new_cids), 135)
+
+        result = start_session(col, cfg)
+        self.assertEqual(result.card_count, 500)
+        self.assertEqual(result.plan.planned_review, 365)
+        self.assertEqual(result.plan.planned_new, 135)
 
     def test_quota_reached_is_reported(self) -> None:
         col = self._collection()

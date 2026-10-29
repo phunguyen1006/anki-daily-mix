@@ -76,7 +76,7 @@ ORDER_LABELS = {
     ORDER_SEQUENTIAL: "Sequential",
 }
 
-SEARCH_DUE = "is:due"
+SEARCH_DUE = "(-is:new is:due)"
 SEARCH_NEW = "is:new"
 SEARCH_EXCLUDES = "-is:suspended -is:buried"
 

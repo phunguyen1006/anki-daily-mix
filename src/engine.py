@@ -200,8 +200,14 @@ def _round_half_up(value: float) -> int:
 
 
 def _query_for_decks(deck_ids: Sequence[int], state: str) -> str:
-    joined = ",".join(str(int(did)) for did in sorted(set(deck_ids)))
-    return f"did:{joined} {state} {constants.SEARCH_EXCLUDES}".strip()
+    valid_dids = sorted(set(int(did) for did in deck_ids))
+    if not valid_dids:
+        return "did:0"
+    if len(valid_dids) == 1:
+        deck_clause = f"did:{valid_dids[0]}"
+    else:
+        deck_clause = "(" + " or ".join(f"did:{did}" for did in valid_dids) + ")"
+    return f"{deck_clause} {state} {constants.SEARCH_EXCLUDES}".strip()
 
 
 def _cid_query(card_ids: Sequence[int]) -> str:
